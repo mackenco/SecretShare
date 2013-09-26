@@ -2,7 +2,7 @@ class FriendshipsController < ApplicationController
 
   def create
     @friendship = Friendship.new(user_id: current_user.id, friend_id: params[:user_id])
-
+    sleep(2)
     if @friendship.save
       redirect_to current_user
     else

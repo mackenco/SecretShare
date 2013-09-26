@@ -10,11 +10,17 @@
 
   <script>
     $('.friend').on('click', function(){
-      var id = $(this).attr('data-id');
-      alert("Clicked: "+id)
+      var button = $(this)
+      button.prop('disabled', true);
+      button.html('Friending...')
+      var id = button.attr('data-id');
       $.ajax({
         url: ""+id+"/friendships",
-        type: "POST"
+        type: "POST",
+        success: function (){
+          // alert("Friend added");
+          button.remove();
+        }
       });
     });
   </script>
