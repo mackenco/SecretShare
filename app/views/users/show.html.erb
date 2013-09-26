@@ -26,9 +26,19 @@
       data: form.serialize(),
       dataType: 'json',
       success: function( response ){
-        newSecret = $('<li>'+ response.text +'</li>');
+        var newSecret = $('<li>'+ response[0].text +'</li>');
+        if (response[1]) {
+          var tagList = $('<ul></ul>');
+          response.shift();
+          response.forEach(function(tag){
+            var newTag = $('<li>'+tag.text+'</li>');
+            tagList.append(newTag)
+          });
+        }
+        newSecret.append(tagList);
         $('.secrets').append(newSecret);
         textbox[0].value = '';
+        $('#selected-tags').children().remove();
       }
     });
   });
