@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130926135704) do
+ActiveRecord::Schema.define(:version => 20130926174121) do
 
   create_table "friendships", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -21,6 +21,15 @@ ActiveRecord::Schema.define(:version => 20130926135704) do
   end
 
   add_index "friendships", ["user_id", "friend_id"], :name => "index_friendships_on_user_id_and_friend_id", :unique => true
+
+  create_table "secret_taggings", :force => true do |t|
+    t.integer  "secret_id"
+    t.integer  "tag_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "secret_taggings", ["secret_id", "tag_id"], :name => "index_secret_taggings_on_secret_id_and_tag_id", :unique => true
 
   create_table "secrets", :force => true do |t|
     t.text     "text",         :null => false
@@ -32,6 +41,12 @@ ActiveRecord::Schema.define(:version => 20130926135704) do
 
   add_index "secrets", ["author_id"], :name => "index_secrets_on_author_id"
   add_index "secrets", ["recipient_id"], :name => "index_secrets_on_recipient_id"
+
+  create_table "tags", :force => true do |t|
+    t.string   "text",       :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name",            :null => false

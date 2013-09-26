@@ -3,6 +3,7 @@ class SecretsController < ApplicationController
   before_filter :require_current_user!
 
   def new
+    @tags = Tag.all
     @users = User.all
     render :new
   end

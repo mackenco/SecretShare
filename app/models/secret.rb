@@ -1,5 +1,5 @@
 class Secret < ActiveRecord::Base
-  attr_accessible :text, :author_id, :recipient_id
+  attr_accessible :text, :author_id, :recipient_id, :tag_ids
 
   validates :text, :author_id, :recipient_id, presence: true
 
@@ -16,5 +16,15 @@ class Secret < ActiveRecord::Base
     foreign_key: :recipient_id,
     primary_key: :id
   )
+
+  has_many(
+    :secret_taggings,
+    class_name: "SecretTagging",
+    foreign_key: :secret_id,
+    primary_key: :id)
+
+  has_many(
+    :tags, through: :secret_taggings, source: :tag)
+
 
 end

@@ -7,7 +7,7 @@
   <% end %>
 </ul>
 
-<%= render "secrets/form", choose_user: false, user: @user %>
+<%= render "secrets/form", choose_user: false, user: @user, tags: @tags %>
 
 <script>
   $('form').on('submit', function(event) {
@@ -25,7 +25,6 @@
         newSecret = $('<li>'+ response.text +'</li>');
         $('.secrets').append(newSecret);
         textbox[0].value = '';
-        // console.log(response);
       }
     });
   });
