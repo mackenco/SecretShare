@@ -1,5 +1,7 @@
 class SecretsController < ApplicationController
 
+  before_filter :require_current_user!
+
   def new
     @users = User.all
     render :new
