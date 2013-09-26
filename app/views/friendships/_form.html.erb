@@ -1,1 +1,3 @@
-<%= button_to "Add friend", user_friendships_url(user.id) %>
+<% if Friendship.can_friend?(user, friend) %>
+<%= button_to "Add friend", user_friendships_url(friend.id) %>
+<% end %>

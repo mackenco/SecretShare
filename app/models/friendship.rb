@@ -18,4 +18,9 @@ class Friendship < ActiveRecord::Base
     primary_key: :id
   )
 
+  def self.can_friend?(user, friend)
+    return false if user == friend
+    not Friendship.exists?(user_id: user.id, friend_id: friend.id)
+  end
+
 end
