@@ -21,6 +21,7 @@ class UsersController < ApplicationController
     @tags = Tag.all
     if params.include?(:id)
       @user = User.find(params[:id])
+      @received_secrets = @user.received_secrets.includes(:tags)
     else
       redirect_to user_url(current_user)
     end
