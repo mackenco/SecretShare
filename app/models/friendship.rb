@@ -23,4 +23,9 @@ class Friendship < ActiveRecord::Base
     not Friendship.exists?(user_id: user.id, friend_id: friend.id)
   end
 
+  def self.can_unfriend?(user, friend)
+    # return false if user == friend
+    Friendship.exists?(user_id: user.id, friend_id: friend.id)
+  end
+
 end

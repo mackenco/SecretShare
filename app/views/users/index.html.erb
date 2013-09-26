@@ -3,8 +3,14 @@
 <ul>
   <% @users.each do |user|  %>
     <li><%= link_to user.name, user %>
-      <%#= render "friendships/form", user: current_user, friend: user %>
-      <button class="friend" data-id="<%= user.id %>">Friend user</button>
+
+      <% unless current_user == user %>
+      <span class="friend-buttons <%= "can-friend" if Friendship.can_friend?(current_user, user) %><%= "can-unfriend" if Friendship.can_unfriend?(current_user, user) %>">
+        <button class="friend" data-id="<%= user.id %>">Friend user</button>
+        <button class="unfriend" data-id="<%= user.id %>">Unfriend user</button>
+      </span>
+      <% end %>
+
     </li>
   <% end  %>
 
@@ -18,11 +24,25 @@
         url: ""+id+"/friendships",
         type: "POST",
         success: function (){
-          // alert("Friend added");
-          button.remove();
+          button.parent().addClass('can-unfriend');
+          button.parent().removeClass('can-friend');
         }
       });
     });
+
+    $('.unfriend').on('click', function(){
+      var button = $(this);
+      var id = button.attr('data-id');
+      $.ajax({
+        url: ""+id+"/friendships",
+        type: "DELETE",
+        success: function(){
+          button.parent().addClass('can-friend');
+          button.parent().removeClass('can-unfriend');
+        }
+      });
+    });
+
   </script>
 
 </ul>
